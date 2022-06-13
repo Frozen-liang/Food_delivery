@@ -1,5 +1,6 @@
 package com.ljd.Food_Delivery.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,19 +9,18 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true)
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 @SuperBuilder
-@TableName("category")
-public class CategoryEntity extends BaseEntity{
+@TableName("file")
+public class FileEntity extends BaseEntity{
 
-    // 雪花id
-    private long id;
+    @TableId
+    private int id;
 
-    private Integer type;
+    private String fileName;
 
-    private String name;
+    private Long fileLength;
 
-    private int sort;
 }

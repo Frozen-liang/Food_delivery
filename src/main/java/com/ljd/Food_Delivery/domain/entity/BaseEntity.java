@@ -22,7 +22,7 @@ public class BaseEntity {
     private LocalDateTime createTime;
 
     //@LastModifiedDate
-    @TableField(fill = FieldFill.UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     @JsonIgnore
     private LocalDateTime updateTime;
 
@@ -33,9 +33,10 @@ public class BaseEntity {
 
     //@LastModifiedBy
     @JsonIgnore
-    @TableField(fill = FieldFill.UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private long updateUser;
 
     //@TableField(value = "is_delete")    //通过tableField进行字段不一致的映射
     //private int delete;
+
 }

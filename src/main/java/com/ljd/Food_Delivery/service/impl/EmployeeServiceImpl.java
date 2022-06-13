@@ -7,7 +7,6 @@ import com.ljd.Food_Delivery.convert.EmployeeConverter;
 import com.ljd.Food_Delivery.domain.entity.EmployeeEntity;
 import com.ljd.Food_Delivery.domain.mapper.EmployeeMapper;
 import com.ljd.Food_Delivery.dto.request.EmployeeRequest;
-import com.ljd.Food_Delivery.dto.response.EmployeeResponse;
 import com.ljd.Food_Delivery.exception.ErrorCode;
 import com.ljd.Food_Delivery.exception.FoodException;
 import com.ljd.Food_Delivery.service.EmployeeService;
@@ -15,7 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,6 +26,12 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, EmployeeEnt
 
     public EmployeeServiceImpl(EmployeeConverter employeeConverter) {
         this.employeeConverter = employeeConverter;
+    }
+
+    @Override
+    public EmployeeEntity getEntityById(long id) {
+        return Optional.ofNullable(getById(id))
+                .orElseThrow(() -> new FoodException(ErrorCode.EMPLOYEE_ID_ERROR));
     }
 
     @Override
@@ -42,7 +47,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, EmployeeEnt
             // 分页查询
             return page(employeeEntityPage, entityWrapper);
         } catch (Exception e) {
-            throw new FoodException(ErrorCode.employee_PAGE_ERROR);
+            throw new FoodException(ErrorCode.EMPLOYEE_PAGE_ERROR);
         }
 
     }
@@ -57,57 +62,34 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, EmployeeEnt
             // 存储
             return save(employeeEntity);
         } catch (Exception e) {
-            throw new FoodException(ErrorCode.employee_ADD_ERROR);
+            throw new FoodException(ErrorCode.EMPLOYEE_ADD_ERROR);
         }
 
-    }
-
-    @Override
-    public boolean login(HttpServletRequest request, EmployeeRequest employeeRequest) {
-
-//        EmployeeResponse employeeResponse = baseMapper.login(employeeRequest);
-        try {
-            employeeRequest.setPassword(DigestUtils.md5DigestAsHex(employeeRequest.getPassword().getBytes()));
-            EmployeeResponse employeeResponse = getBaseMapper().login(employeeRequest);
-            if (employeeResponse == null) {
-                throw new FoodException(ErrorCode.employee_LOGIN_ERROR);
-            } else if (employeeResponse.getStatus() == 0) {
-                throw new FoodException(ErrorCode.employee_LOGIN_ERROR);
-            }
-            // 存放域数据 保存当前的id
-            request.getSession().setAttribute("employee", employeeResponse.getId());
-            return true;
-        } catch (Exception e) {
-            throw new FoodException(ErrorCode.employee_LOGIN_ERROR);
-        }
-    }
-
-    @Override
-    public boolean logout(HttpServletRequest request) {
-        try {
-            // 移除域属性
-            request.getSession().removeAttribute("employee");
-            return true;
-        } catch (Exception e) {
-            throw new FoodException(ErrorCode.employee_PAGE_ERROR);
-        }
     }
 
     @Override
     public boolean update(EmployeeRequest employeeRequest) {
         try {
+            // 判断用户是否存在
             getEntityById(employeeRequest.getId());
+            // 密码加密
             employeeRequest.setPassword(DigestUtils.md5DigestAsHex(employeeRequest.getPassword().getBytes()));
             EmployeeEntity employeeEntity = employeeConverter.toEntity(employeeRequest);
-            return save(employeeEntity);
+
+            return saveOrUpdate(employeeEntity);
         } catch (Exception e) {
-            throw new FoodException(ErrorCode.employee_UPDATE_ERROR);
+            throw new FoodException(ErrorCode.EMPLOYEE_UPDATE_ERROR);
         }
     }
 
     @Override
-    public EmployeeEntity getEntityById(long id) {
-        return Optional.ofNullable(getById(id))
-                .orElseThrow(() -> new FoodException(ErrorCode.employee_ID_ERROR));
+    public Boolean deleteByIds(List<Long> ids) {
+        try {
+            return removeByIds(ids);
+        } catch (Exception e) {
+            throw new FoodException(ErrorCode.EMPLOYEE_DELETE_ERROR);
+        }
     }
+
+
 }

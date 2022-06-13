@@ -4,3 +4,8 @@ spring:
     url: jdbc:mysql://localhost:3306/food?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: 12345678
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: assign_id
