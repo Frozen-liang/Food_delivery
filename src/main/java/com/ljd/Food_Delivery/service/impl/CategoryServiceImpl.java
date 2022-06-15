@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ljd.Food_Delivery.convert.CategoryConverter;
 import com.ljd.Food_Delivery.domain.entity.CategoryEntity;
+import com.ljd.Food_Delivery.domain.entity.DishEntity;
+import com.ljd.Food_Delivery.domain.entity.SetmealEntity;
 import com.ljd.Food_Delivery.domain.mapper.CategoryMapper;
 import com.ljd.Food_Delivery.dto.request.CategoryRequest;
 import com.ljd.Food_Delivery.exception.ErrorCode;
@@ -35,10 +37,10 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryEnt
     public Page<CategoryEntity> getByPage(int page, int pageSize) {
         try {
             // 构建分页构造器
-            Page<CategoryEntity> categoryEntityPage = new Page<>();
+            Page<CategoryEntity> categoryEntityPage = new Page<>(page,pageSize);
             // 创建对象
             LambdaQueryWrapper<CategoryEntity> lqm = new LambdaQueryWrapper<>();
-
+            lqm.orderByDesc(CategoryEntity::getSort);
             return page(categoryEntityPage, lqm);
         } catch (Exception e) {
             throw new FoodException(ErrorCode.CATEGORY_PAGE_ERROR);
@@ -46,10 +48,29 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryEnt
     }
 
     @Override
+    public List<CategoryEntity> getList(CategoryRequest request) {
+        try {
+            // 创建查询条件对象
+            LambdaQueryWrapper<CategoryEntity> lqm = new LambdaQueryWrapper<>();
+            lqm.eq(request.getType()!=null,CategoryEntity::getType,request.getType());
+            lqm.orderByDesc(CategoryEntity::getType);
+            return list(lqm);
+        } catch (Exception e) {
+            throw new FoodException(ErrorCode.CATEGORY_PAGE_ERROR);
+        }
+    }
+
+    @Override
+    public List<CategoryEntity> getAddType() {
+        List<CategoryEntity> list = list();
+        return list;
+    }
+
+    @Override
     public boolean save(CategoryRequest request) {
         try {
             CategoryEntity categoryEntity = categoryConverter.toEntity(request);
-            return saveOrUpdate(categoryEntity);
+            return save(categoryEntity);
         } catch (Exception e) {
             throw new FoodException(ErrorCode.CATEGORY_ADD_ERROR);
         }
@@ -68,9 +89,16 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryEnt
     }
 
     @Override
-    public boolean deleteByIds(List<Long> ids) {
+    public boolean deleteById(Long id) {
         try {
-            return removeByIds(ids);
+            // 判断关联菜品
+            LambdaQueryWrapper<DishEntity> delqw = new LambdaQueryWrapper<>();
+            delqw.eq(DishEntity::getCategoryId,id);
+            // 判断关联套餐
+            LambdaQueryWrapper<SetmealEntity> selqw = new LambdaQueryWrapper<>();
+            selqw.eq(SetmealEntity::getCategoryId,id);
+
+            return removeById(id);
         } catch (Exception e) {
             throw new FoodException(ErrorCode.CATEGORY_DELETE_ERROR);
         }

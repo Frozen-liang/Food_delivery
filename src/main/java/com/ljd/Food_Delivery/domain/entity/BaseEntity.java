@@ -18,12 +18,12 @@ public class BaseEntity {
 
     //@CreatedDate// 自动赋值
     @TableField(fill = FieldFill.INSERT)
-    @JsonIgnore//一般标记在属性或者方法上，返回的json数据即不包含该属性。
+    //@JsonIgnore//一般标记在属性或者方法上，返回的json数据即不包含该属性。
     private LocalDateTime createTime;
 
     //@LastModifiedDate
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    @JsonIgnore
+    //@JsonIgnore
     private LocalDateTime updateTime;
 
     //@CreatedBy

@@ -1,6 +1,6 @@
 package com.ljd.Food_Delivery.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ljd.Food_Delivery.domain.entity.CategoryEntity;
 import com.ljd.Food_Delivery.dto.Response;
 import com.ljd.Food_Delivery.dto.request.CategoryRequest;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Category")
+@RequestMapping("/category")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -21,8 +21,14 @@ public class CategoryController {
 
     @GetMapping("/page")
     // 查询
-    public Response<Page<CategoryEntity>> getByPage(int page, int pageSize){
+    public Response<IPage<CategoryEntity>> getByPage(int page, int pageSize){
         return Response.ok(categoryService.getByPage(page,pageSize));
+    }
+
+    @GetMapping("/list")
+    // 查询
+    public Response<List<CategoryEntity>> getList(CategoryRequest request){
+        return Response.ok(categoryService.getList(request));
     }
 
     @PostMapping
@@ -38,8 +44,8 @@ public class CategoryController {
     }
 
     // 删除
-    @DeleteMapping("/delete")
-    public Response<Boolean> delete(@RequestBody List<Long> ids){
-        return Response.ok(categoryService.deleteByIds(ids));
+    @DeleteMapping
+    public Response<Boolean> delete(Long id){
+        return Response.ok(categoryService.deleteById(id));
     }
 }

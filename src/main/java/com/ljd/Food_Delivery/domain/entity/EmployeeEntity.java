@@ -19,7 +19,7 @@ public class EmployeeEntity extends BaseEntity{
 
     // 局部配置优先全局配
     @TableId(type = IdType.AUTO)
-    private long id;
+    private Long id;
 
     private String name;
 

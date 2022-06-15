@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/file")
+@RequestMapping("/common")
 public class FileController {
     private final FileService fileService;
 
@@ -20,12 +20,12 @@ public class FileController {
     }
 
     @PostMapping("/upload")
-    public Response<Boolean> fileUpload(MultipartFile file){
+    public Response<Boolean> fileUpload(MultipartFile file) {
         return Response.ok(fileService.ImgUpload(file));
     }
 
     @GetMapping("/download")
-    public Response<Boolean> fileDownload(HttpServletRequest request){
-        return Response.ok(fileService.ImgDownLoad(request));
+    public void fileDownload(String name, HttpServletResponse response) {
+        fileService.ImgDownLoad(name, response);
     }
 }

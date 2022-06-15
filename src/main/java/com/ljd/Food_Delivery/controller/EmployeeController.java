@@ -1,6 +1,6 @@
 package com.ljd.Food_Delivery.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ljd.Food_Delivery.common.validate.InsertGroup;
 import com.ljd.Food_Delivery.domain.entity.EmployeeEntity;
 import com.ljd.Food_Delivery.dto.Response;
@@ -23,9 +23,15 @@ public class EmployeeController {
 
     // 分页查询 page 当前页码数 pageSize 页面显示条数 name 模糊查询
     @GetMapping("/page")
-    public Response<Page<EmployeeEntity>> page(int page, int pageSize, String name) {
+    public Response<IPage<EmployeeEntity>> page(int page, int pageSize, String name) {
         return Response.ok(employeeService.page(page, pageSize, name));
     }
+
+    @GetMapping("/{id}")
+    public Response<EmployeeEntity> getEntityById(@PathVariable long id) {
+        return Response.ok(employeeService.getEntityById(id));
+    }
+
 
     // 添加
     @PostMapping()

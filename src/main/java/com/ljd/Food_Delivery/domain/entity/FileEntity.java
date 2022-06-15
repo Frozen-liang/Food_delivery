@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 public class FileEntity extends BaseEntity{
 
     @TableId
-    private int id;
+    private Long id;
 
     private String fileName;
 

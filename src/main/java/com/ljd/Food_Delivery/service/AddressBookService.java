@@ -11,7 +11,7 @@ public interface AddressBookService extends IService<AddressBookEntity> {
     // 查询
     AddressBookResponse getDefaultById(long id);
 
-    List<AddressBookResponse> getAll();
+    List<AddressBookEntity> getAll();
 
     // 新增
     boolean save(AddressBookRequest request);
@@ -20,5 +20,5 @@ public interface AddressBookService extends IService<AddressBookEntity> {
     boolean update(AddressBookRequest request);
 
     // 删除
-    boolean deleteByIds(List<Long> ids);
+    boolean deleteById(long id);
 }

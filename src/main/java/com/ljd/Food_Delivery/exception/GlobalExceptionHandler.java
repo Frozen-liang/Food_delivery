@@ -9,7 +9,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(FoodException.class)
     public Response doBookException(FoodException foodException) {
-        return Response.error(foodException.getCode(), foodException.getMessage());
+        return Response.error("111", "操作失败");
     }
 
 //    @ExceptionHandler(SystemException.class)

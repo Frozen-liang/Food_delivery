@@ -4,11 +4,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.ljd.Food_Delivery.domain.entity.FileEntity;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public interface FileService extends IService<FileEntity> {
 
     boolean ImgUpload(MultipartFile file);
 
-    boolean ImgDownLoad(HttpServletRequest request);
+    void ImgDownLoad(String name,HttpServletResponse response);
 }

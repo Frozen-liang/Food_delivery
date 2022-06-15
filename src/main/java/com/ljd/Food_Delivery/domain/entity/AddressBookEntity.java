@@ -16,9 +16,9 @@ import lombok.experimental.SuperBuilder;
 public class AddressBookEntity extends BaseEntity{
 
     @TableId
-    private long id;
+    private Long id;
 
-    private long userId;
+    private Long userId;
 
     private String consignee;
 

@@ -3,9 +3,8 @@ package com.ljd.Food_Delivery.domain.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ljd.Food_Delivery.domain.entity.AddressBookEntity;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 @Mapper
-@Repository
+//@Repository
 public interface AddressBookMapper extends BaseMapper<AddressBookEntity> {
 }

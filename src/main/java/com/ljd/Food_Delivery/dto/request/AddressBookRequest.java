@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddressBookRequest {
 
-    private long id;
+    private Long id;
 
-    private long userId;
+    private Long userId;
 
     private String consignee;
 

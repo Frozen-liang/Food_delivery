@@ -9,3 +9,7 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: assign_id
+
+#上传图片的位置
+Food_delivery:
+  path: /Users/Project/myself/Food_delivery/src/main/resources/file

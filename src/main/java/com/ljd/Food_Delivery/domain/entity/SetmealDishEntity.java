@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 public class SetmealDishEntity extends BaseEntity {
 
     @TableId
-    private long id;
+    private Long id;
 
     private String setmealId;
 

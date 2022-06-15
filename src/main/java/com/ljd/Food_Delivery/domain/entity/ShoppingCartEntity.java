@@ -1,6 +1,7 @@
 package com.ljd.Food_Delivery.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,8 +18,7 @@ import java.time.LocalDateTime;
 @TableName("shopping_cart")
 public class ShoppingCartEntity {
 
-    @TableId
-    private long id;
+    private Long id;
 
     private String name;
 
@@ -36,6 +36,7 @@ public class ShoppingCartEntity {
 
     private BigDecimal amount;
 
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
 }

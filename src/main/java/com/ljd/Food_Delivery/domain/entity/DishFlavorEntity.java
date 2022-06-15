@@ -1,8 +1,10 @@
 package com.ljd.Food_Delivery.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true)
@@ -13,10 +15,9 @@ import lombok.experimental.SuperBuilder;
 @TableName("dish_flavor")
 public class DishFlavorEntity extends BaseEntity {
 
-    @TableId
-    private long id;
+    private Long id;
 
-    private long dishId;
+    private Long dishId;
 
     private String name;
 

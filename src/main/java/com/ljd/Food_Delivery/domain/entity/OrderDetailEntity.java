@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class OrderDetailEntity {
 
   @TableId
-  private long id;
+  private Long id;
 
   private String name;
 

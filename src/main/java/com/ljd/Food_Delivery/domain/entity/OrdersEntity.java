@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 public class OrdersEntity {
 
 
-  private long id;
+  private Long id;
 
   private String number;
 

@@ -1,6 +1,5 @@
 package com.ljd.Food_Delivery.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,8 +13,7 @@ import lombok.NoArgsConstructor;
 @TableName("user")
 public class UserEntity {
 
-  @TableId
-  private long id;
+  private Long id;
 
   private String name;
 

@@ -13,10 +13,14 @@ public interface CategoryService extends IService<CategoryEntity> {
 
     Page<CategoryEntity> getByPage(int page,int pageSize);
 
+    List<CategoryEntity> getList(CategoryRequest request);
+
+    // 菜品添加分类选择类型 查询
+    List<CategoryEntity> getAddType();
     // 新增
     boolean save(CategoryRequest request);
     // 修改
     boolean update(CategoryRequest request);
     // 删除
-    boolean deleteByIds(List<Long> ids);
+    boolean deleteById(Long ids);
 }

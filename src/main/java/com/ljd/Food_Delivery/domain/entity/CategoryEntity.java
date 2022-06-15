@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 public class CategoryEntity extends BaseEntity{
 
     // 雪花id
-    private long id;
+    private Long id;
 
     private Integer type;
 
