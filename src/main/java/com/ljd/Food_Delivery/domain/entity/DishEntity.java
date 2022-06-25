@@ -23,7 +23,7 @@ public class DishEntity extends BaseEntity{
   private String name;
 
   // 菜品分类
-  private long categoryId;
+  private Long categoryId;
 
   private BigDecimal price;
 

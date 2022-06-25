@@ -63,12 +63,12 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
                 mount = shoppingCart;
             } else {
                 int number = shoppingCart.getNumber();
-                shoppingCart.setNumber(number + 1);
+                // 不生效
+                shoppingCart.setNumber(++number);
                 updateById(shoppingCart);
             }
             return true;
         } catch (Exception e) {
-
             throw new FoodException(ErrorCode.CATEGORY_ADD_ERROR);
         }
     }
@@ -76,5 +76,19 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
     @Override
     public ShoppingCartEntity getEntityById(Long id) {
         return getById(id);
+    }
+
+    @Override
+    public boolean delete() {
+        try {
+            LambdaQueryWrapper<ShoppingCartEntity> sclqw = new LambdaQueryWrapper<>();
+            // 根据当前使用用户id删除getUserId
+            sclqw.eq(ShoppingCartEntity::getUserId, 1);
+
+            return remove(sclqw);
+        } catch (Exception e) {
+            throw new FoodException(ErrorCode.DISH_DELETE_ERROR);
+        }
+
     }
 }

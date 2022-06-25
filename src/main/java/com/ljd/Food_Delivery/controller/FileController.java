@@ -20,7 +20,7 @@ public class FileController {
     }
 
     @PostMapping("/upload")
-    public Response<Boolean> fileUpload(MultipartFile file) {
+    public Response<String> fileUpload(MultipartFile file) {
         return Response.ok(fileService.ImgUpload(file));
     }
 

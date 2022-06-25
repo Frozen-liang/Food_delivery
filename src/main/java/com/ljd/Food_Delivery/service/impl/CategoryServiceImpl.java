@@ -12,6 +12,8 @@ import com.ljd.Food_Delivery.dto.request.CategoryRequest;
 import com.ljd.Food_Delivery.exception.ErrorCode;
 import com.ljd.Food_Delivery.exception.FoodException;
 import com.ljd.Food_Delivery.service.CategoryService;
+import com.ljd.Food_Delivery.service.DishService;
+import com.ljd.Food_Delivery.service.SetmealService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,9 +24,13 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryEnt
         implements CategoryService {
 
     private final CategoryConverter categoryConverter;
+    private final DishService dishService;
+    private final SetmealService setmealService;
 
-    public CategoryServiceImpl(CategoryConverter categoryConverter) {
+    public CategoryServiceImpl(CategoryConverter categoryConverter, DishService dishService, SetmealService setmealService) {
         this.categoryConverter = categoryConverter;
+        this.dishService = dishService;
+        this.setmealService = setmealService;
     }
 
     @Override
@@ -37,7 +43,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryEnt
     public Page<CategoryEntity> getByPage(int page, int pageSize) {
         try {
             // 构建分页构造器
-            Page<CategoryEntity> categoryEntityPage = new Page<>(page,pageSize);
+            Page<CategoryEntity> categoryEntityPage = new Page<>(page, pageSize);
             // 创建对象
             LambdaQueryWrapper<CategoryEntity> lqm = new LambdaQueryWrapper<>();
             lqm.orderByDesc(CategoryEntity::getSort);
@@ -52,7 +58,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryEnt
         try {
             // 创建查询条件对象
             LambdaQueryWrapper<CategoryEntity> lqm = new LambdaQueryWrapper<>();
-            lqm.eq(request.getType()!=null,CategoryEntity::getType,request.getType());
+            lqm.eq(request.getType() != null, CategoryEntity::getType, request.getType());
             lqm.orderByDesc(CategoryEntity::getType);
             return list(lqm);
         } catch (Exception e) {
@@ -93,10 +99,17 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryEnt
         try {
             // 判断关联菜品
             LambdaQueryWrapper<DishEntity> delqw = new LambdaQueryWrapper<>();
-            delqw.eq(DishEntity::getCategoryId,id);
+            delqw.eq(id != null, DishEntity::getCategoryId, id);
+            if (dishService.count(delqw) >0 ) {
+                throw new FoodException(ErrorCode.CATEGORY_DELETE_ERROR);
+            }
+
             // 判断关联套餐
             LambdaQueryWrapper<SetmealEntity> selqw = new LambdaQueryWrapper<>();
-            selqw.eq(SetmealEntity::getCategoryId,id);
+            selqw.eq(id != null, SetmealEntity::getCategoryId, id);
+            if (setmealService.count(selqw) >0 ) {
+                throw new FoodException(ErrorCode.CATEGORY_DELETE_ERROR);
+            }
 
             return removeById(id);
         } catch (Exception e) {

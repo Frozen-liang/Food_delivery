@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface FileService extends IService<FileEntity> {
 
-    boolean ImgUpload(MultipartFile file);
+    String ImgUpload(MultipartFile file);
 
     void ImgDownLoad(String name,HttpServletResponse response);
 }

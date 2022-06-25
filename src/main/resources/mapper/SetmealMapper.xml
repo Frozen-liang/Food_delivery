@@ -4,4 +4,40 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ljd.Food_Delivery.domain.mapper.SetmealMapper">
 
+    <update id="updateStatus" parameterType="java.util.List">
+        update setmeal
+        set
+        status = #{status}
+        where id in
+        (
+        <foreach item="id" collection="ids" index="index" open="" close="" separator=",">
+            #{id}
+        </foreach>
+        )
+    </update>
+    <select id="selectByPage" resultType="com.ljd.Food_Delivery.dto.response.SetMealResponse">
+        SELECT
+        setmeal.id,
+        setmeal.category_id,
+        setmeal.`name`,
+        setmeal.`status`,
+        setmeal.price,
+        setmeal.`code`,
+        setmeal.description,
+        setmeal.image,
+        setmeal.create_time,
+        setmeal.update_time,
+        setmeal.create_user,
+        setmeal.update_user,
+        setmeal.is_deleted,
+        category.`name` AS categoryName
+        FROM
+        category,setmeal
+        <where>
+            category.id = setmeal.category_id
+            <if test="name != null">
+                and name ilike ('%' || #{name} || '%')
+            </if>
+        </where>
+    </select>
 </mapper>

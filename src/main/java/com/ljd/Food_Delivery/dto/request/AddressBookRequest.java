@@ -37,7 +37,7 @@ public class AddressBookRequest {
 
     private String label;
 
-    private byte isDefault;
+    private Integer isDefault;
 
     private int isDeleted;
 }

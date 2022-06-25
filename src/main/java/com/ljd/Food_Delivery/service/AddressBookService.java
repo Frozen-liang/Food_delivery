@@ -9,16 +9,16 @@ import java.util.List;
 
 public interface AddressBookService extends IService<AddressBookEntity> {
     // 查询
-    AddressBookResponse getDefaultById(long id);
+    AddressBookResponse getDefault();
 
     List<AddressBookEntity> getAll();
 
     // 新增
     boolean save(AddressBookRequest request);
 
-    // 修改
+    // 修改默认地址
     boolean update(AddressBookRequest request);
 
     // 删除
-    boolean deleteById(long id);
+    boolean deleteById(Long ids);
 }

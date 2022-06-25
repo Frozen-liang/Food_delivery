@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Response<T> {
+public class Response<T> implements Serializable { // 表示这个类型可以被序列化 缓存到Redis
 
     private String code;
     private String msg;

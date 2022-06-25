@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ShoppingCartResponse {
 
-    private long id;
+    private Long id;
 
     private String name;
 
     private String image;
 
-    private long userId;
+    private Long userId;
 
     private Long dishId;
 

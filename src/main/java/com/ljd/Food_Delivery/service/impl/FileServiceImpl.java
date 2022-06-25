@@ -6,6 +6,7 @@ import com.ljd.Food_Delivery.domain.mapper.FileMapper;
 import com.ljd.Food_Delivery.exception.ErrorCode;
 import com.ljd.Food_Delivery.exception.FoodException;
 import com.ljd.Food_Delivery.service.FileService;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,17 +24,23 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FileEntity> impleme
     private String Food_delivery;
 
     @Override
-    public boolean ImgUpload(MultipartFile file) {
+    public String ImgUpload(MultipartFile file) {
         try {
-            String fileName = UUID.randomUUID().toString();
+            // 得到原始的图片名字
+            String originalFilename = file.getOriginalFilename();
+            // 对原始名字进行切割 把文件类型切割出来
+            String substring = originalFilename.substring(originalFilename.lastIndexOf('.'));
+
+            String fileName = UUID.randomUUID().toString()+substring;
 
             FileEntity fileEntity = FileEntity.builder()
                     .fileName(fileName)
                     .fileLength(file.getSize())
                     .build();
             file.transferTo(
-                    new File(Food_delivery + fileName + ".jpg"));
-            return saveOrUpdate(fileEntity);
+                    new File(Food_delivery + fileName));
+            saveOrUpdate(fileEntity);
+            return fileName;
         } catch (Exception e) {
             throw new FoodException(ErrorCode.FILE_UPLOAD_ERROR);
         }
@@ -51,12 +58,8 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FileEntity> impleme
 
             response.setContentType("image/jpeg");
 
-            int len = 0;
-            byte[] bytes = new byte[1024];
-            while ((len = fileInputStream.read(bytes)) != -1) {
-                outputStream.write(bytes, 0, len);
-                outputStream.flush();
-            }
+            IOUtils.copy(fileInputStream,outputStream);
+
             //关闭资源
             outputStream.close();
             fileInputStream.close();

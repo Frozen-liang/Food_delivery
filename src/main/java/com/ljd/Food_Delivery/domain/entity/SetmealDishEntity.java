@@ -18,9 +18,9 @@ public class SetmealDishEntity extends BaseEntity {
     @TableId
     private Long id;
 
-    private String setmealId;
+    private Long setmealId;
 
-    private String dishId;
+    private Long dishId;
 
     private String name;
 

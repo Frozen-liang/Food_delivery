@@ -7,11 +7,15 @@ import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         unmappedSourcePolicy = ReportingPolicy.IGNORE, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DishConvert {
 
     DishEntity toEntity(DishRequest dishRequest);
 
-    DishResponse toBookResponse(DishEntity dishEntity);
+    DishResponse toDishResponse(DishEntity dishEntity);
+
+    List<DishResponse> toListDishResponse (List<DishEntity> list);
 }

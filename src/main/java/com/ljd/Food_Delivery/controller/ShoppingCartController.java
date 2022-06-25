@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * 购物车
- */
 @Slf4j
 @RestController
 @RequestMapping("/shoppingCart")
@@ -31,5 +28,15 @@ public class ShoppingCartController {
     @PostMapping("/add")
     public Response<Boolean> add(@RequestBody ShoppingCartRequest request) {
         return Response.ok(shoppingCartService.add(request));
+    }
+
+    @PostMapping("/sub")
+    public Response<Boolean> sub(@RequestBody ShoppingCartRequest request) {
+        return Response.ok(shoppingCartService.add(request));
+    }
+
+    @DeleteMapping("/clean")
+    public Response<Boolean> delete() {
+        return Response.ok(shoppingCartService.delete());
     }
 }

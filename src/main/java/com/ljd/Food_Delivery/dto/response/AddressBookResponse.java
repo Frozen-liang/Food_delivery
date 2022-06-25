@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddressBookResponse {
 
-    private long id;
+    private Long id;
 
-    private long userId;
+    private Long userId;
 
     private String consignee;
 
@@ -37,7 +37,7 @@ public class AddressBookResponse {
 
     private String label;
 
-    private byte isDefault;
+    private Integer isDefault;
 
     private int isDeleted;
 }

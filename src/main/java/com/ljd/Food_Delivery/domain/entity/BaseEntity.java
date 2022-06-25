@@ -8,13 +8,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @Data
-public class BaseEntity {
+public class BaseEntity implements Serializable {
 
     //@CreatedDate// 自动赋值
     @TableField(fill = FieldFill.INSERT)

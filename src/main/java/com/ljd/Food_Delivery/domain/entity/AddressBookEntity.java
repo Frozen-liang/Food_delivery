@@ -42,7 +42,7 @@ public class AddressBookEntity extends BaseEntity{
 
     private String label;
 
-    private byte isDefault;
+    private Integer isDefault;
 
     private int isDeleted;
 }

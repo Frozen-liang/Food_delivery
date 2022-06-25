@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -27,9 +27,9 @@ public class OrdersEntity {
 
   private long addressBookId;
 
-  private Timestamp orderTime;
+  private LocalDateTime orderTime;
 
-  private Timestamp checkoutTime;
+  private LocalDateTime checkoutTime;
 
   private int payMethod;
 

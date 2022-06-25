@@ -13,4 +13,6 @@ public interface ShoppingCartService extends IService<ShoppingCartEntity> {
     boolean add(ShoppingCartRequest request);
 
     ShoppingCartEntity getEntityById(Long id);
+
+    boolean delete();
 }
